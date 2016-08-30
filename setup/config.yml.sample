@@ -1,0 +1,50 @@
+
+# comment out, add/remove boxes as necessary for testing
+# Vagrant code will spin up whatever is configured in this block
+#  name - hostname
+#  box  - configured box name in Vagrant
+#  url  - url to obtain the box
+#  ip   - private ip of vm
+#  cpu  - cpu core count
+#  ram  - amount of memory
+#  role - vm role (if defined) - supported options are ansible-single, ansible-multi
+#  fwd_guest_1 & :fwd_host_1 - first pair of ports forwarded, guest/host respectively
+#  fwd_guest_2 & :fwd_host_2 - first pair of ports forwarded, guest/host respectively
+#
+# good source for Vagrant boxes - https://github.com/chef/bento
+
+---
+- name: node1
+  box: centos-7.2
+  url: http://opscode-vm-bento.s3.amazonaws.com/vagrant/virtualbox/opscode_centos-7.2_chef-provisionerless.box
+  ip: 192.168.50.11
+  cpu: 2
+  cpuexecutioncap: 50
+  ram: 2048
+  role: ansible-multi
+  fwd_guest_1: 80
+  fwd_host_1: 8081
+  fwd_guest_2: 9001
+  fwd_host_2: 9002
+
+#- name: node2
+#  box: centos-7.2
+#  url: http://opscode-vm-bento.s3.amazonaws.com/vagrant/virtualbox/opscode_centos-7.2_chef-provisionerless.box
+#  ip: 192.168.50.12
+#  cpu: 2
+#  cpuexecutioncap: 50
+#  ram: 2048
+#  role: NA
+#  fwd_guest_1: 80
+#  fwd_host_1: 8082
+#  fwd_guest_2: 9001
+#  fwd_host_2: 9003
+
+#- name: node3
+#  box: centos-7.2
+#  url: http://opscode-vm-bento.s3.amazonaws.com/vagrant/virtualbox/opscode_centos-7.2_chef-provisionerless.box
+#  ip: 192.168.50.13
+#  cpu: 2
+#  cpuexecutioncap: 50
+#  ram: 2048
+#  role: NA

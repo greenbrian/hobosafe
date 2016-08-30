@@ -1,0 +1,48 @@
+---
+- hosts: all
+  tasks:
+    - name: Sort by Linux Distro
+      group_by: key="{{ ansible_distribution }}"
+      changed_when: false
+
+- name: Common tasks across all Linux distros
+  hosts: CentOS:Ubuntu
+  become: true
+  vars:
+    consul_version: 0.6.4
+    consul_url: "https://releases.hashicorp.com/consul/{{ consul_version }}/consul_{{ consul_version }}_linux_amd64.zip"
+    consul_web_version: 0.6.4
+    consul_web_url: "https://releases.hashicorp.com/consul/{{ consul_web_version }}/consul_{{ consul_web_version }}_web_ui.zip"
+    consul_template_version: 0.15.0
+    consul_template_url: "https://releases.hashicorp.com/consul-template/{{ consul_template_version }}/consul-template_{{ consul_template_version }}_linux_amd64.zip"
+    vault_version: 0.6.1
+    vault_url: "https://releases.hashicorp.com/vault/{{ vault_version }}/vault_{{ vault_version }}_linux_amd64.zip"
+  tasks:
+  - name: Setup Consul and Vault directory structure
+    command: mkdir -p /etc/vault /etc/consul/server /etc/consul/bootstrap
+             /etc/consul-template /var/lib/consul /opt/consul-ui
+
+    #Download and install Hashicorp components
+  - block:
+    - shell: cd /tmp ; curl -L -o vault.zip {{ vault_url }} && unzip vault.zip &&
+               mv vault /usr/local/bin && rm vault.zip && chmod +x /usr/local/bin/vault
+
+    - shell: cd /tmp ; curl -L -o consul.zip {{ consul_url }} && unzip consul.zip &&
+               mv consul /usr/local/bin && rm consul.zip && chmod +x /usr/local/bin/consul
+
+    - shell: cd /tmp ; curl -L -o consul-template.zip {{ consul_template_url }} &&
+               unzip consul-template.zip && mv consul-template /usr/local/bin &&
+               rm consul-template.zip && chmod +x /usr/local/bin/consul-template
+
+    - shell: cd /tmp ; curl -L -o consul-ui.zip {{ consul_web_url }} &&
+               unzip consul-ui.zip -d /opt/consul-ui && rm consul-ui.zip
+
+- hosts: CentOS
+  connection: local
+  tasks: []
+  roles: []
+
+
+- hosts: Ubuntu
+  connection: local
+  tasks: []
