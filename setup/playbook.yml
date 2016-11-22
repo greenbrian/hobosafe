@@ -9,13 +9,13 @@
   hosts: CentOS:Ubuntu
   become: true
   vars:
-    consul_version: 0.6.4
+    consul_version: 0.7.1
     consul_url: "https://releases.hashicorp.com/consul/{{ consul_version }}/consul_{{ consul_version }}_linux_amd64.zip"
-    consul_web_version: 0.6.4
+    consul_web_version: 0.7.1
     consul_web_url: "https://releases.hashicorp.com/consul/{{ consul_web_version }}/consul_{{ consul_web_version }}_web_ui.zip"
-    consul_template_version: 0.15.0
+    consul_template_version: 0.16.0
     consul_template_url: "https://releases.hashicorp.com/consul-template/{{ consul_template_version }}/consul-template_{{ consul_template_version }}_linux_amd64.zip"
-    vault_version: 0.6.1
+    vault_version: 0.6.2
     vault_url: "https://releases.hashicorp.com/vault/{{ vault_version }}/vault_{{ vault_version }}_linux_amd64.zip"
   tasks:
   - name: Setup Consul and Vault directory structure

@@ -9,3 +9,4 @@
 boxes/*
 /.vagrant
 setup/config.yml
+setup/playbook.retry
